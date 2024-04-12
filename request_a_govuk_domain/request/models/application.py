@@ -8,9 +8,9 @@ REF_NUM_LENGTH = 17
 class ApplicationStatus(models.TextChoices):
     # We're likely to have to add to this with (at least) an
     # "Appealed to NAC" status.
-    approved = "Approved"
-    rejected = "Rejected"
-    pending = "Pending"
+    APPROVED = "approved", "Approved"
+    REJECTED = "rejected", "Rejected"
+    PENDING = "pending", "Pending"
 
 
 class Application(models.Model):
@@ -25,7 +25,7 @@ class Application(models.Model):
     reference = models.CharField(max_length=REF_NUM_LENGTH, null=False)
     status = models.CharField(
         choices=ApplicationStatus.choices,
-        default=ApplicationStatus.pending,
+        default=ApplicationStatus.PENDING,
         max_length=8,
     )
     # This is going to lead to duplicate persons and organisations. It's fine
