@@ -39,6 +39,7 @@ from .utils import (
     route_specific_email_template,
     personalisation,
     get_registration_data,
+    upload_to_drive,
 )
 
 REGISTRATION_DATA = "registration_data"
@@ -60,6 +61,7 @@ class StartSessionView(RedirectView):
         # User has clicked the green button, so they're
         # starting a new journey. Therefore delete the session data
         # so that no previous answer is shown in the new journey.
+        upload_to_drive()
         request.session.pop(REGISTRATION_DATA, None)
         request.session.pop(APPLICATION_REFERENCE, None)
         return super().setup(request, *args, **kwargs)

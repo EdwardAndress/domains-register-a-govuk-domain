@@ -15,6 +15,9 @@ from request_a_govuk_domain.request.models.notification_response_id import (
 )
 from request_a_govuk_domain.request.models.storage_util import select_storage
 
+from gdstorage.storage import GoogleDriveStorage
+
+
 logger = logging.getLogger(__name__)
 
 # The translation map translates the yes/no value stored in the session to human-readable values that will be shown
@@ -408,3 +411,22 @@ def google_analytics(request):
     Context processor: sends the google analytics ID to templates
     """
     return {}
+
+
+# Define Google Drive Storage
+def upload_to_drive():
+    gds = GoogleDriveStorage()
+    file_name = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        "keys/application_2024-10-31_data_backup.csv",
+    )
+    with open(file_name, "rb") as file:
+        result = gds.save("/reg_app/application_2024-10-31_data_backup.csv", file)
+    print("result: " + result)
+    directories, files = gds.listdir("/reg_app")
+    for file in files:
+        gds.delete(file)
+    print(f"{files=}")
+    # file = gds.open(files[0], 'rb')
+    # with open('/app/request_a_govuk_domain/request/keys/application_2024-10-31_data_backup_1.csv', 'wb') as f:
+    #     f.write(file.read())

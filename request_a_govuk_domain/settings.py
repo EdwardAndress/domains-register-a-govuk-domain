@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     "phonenumber_field",
     "storages",
     "django_celery_results",
+    "gdstorage",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = ["gds"]
@@ -337,3 +338,8 @@ if is_gunicorn:
                 add_filter = False
     if add_filter:
         gunicorn_logger.addFilter(LbCheckFilter())
+
+# Google Drive Storage Settings
+GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = os.path.join(
+    BASE_DIR, "request", "keys", "testduetai-408211-3f148c94507c.json"
+)
